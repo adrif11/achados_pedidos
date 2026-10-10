@@ -1,6 +1,6 @@
 # API de Achados e Perdidos
 
-Atividade de Tecnologia e Construção de Software. Segue a organização do exemplo AgendaApi do professor, com servidor HTTP, aplicação Express e rotas/DAO. Os caminhos e métodos seguem o quadro da atividade.
+Atividade de Tecnologia e Construção de Software com servidor HTTP, aplicação Express e rotas/. Os caminhos e métodos seguem o quadro da atividade.
 
 ## Estrutura
 
@@ -10,30 +10,6 @@ Atividade de Tecnologia e Construção de Software. Segue a organização do exe
 - `rotas/mysql.js`: configura o pool de conexões MySQL/MariaDB.
 - `script_banco/achados_perdidos.sql`: cria o banco e a tabela.
 - `postman/AchadosPerdidos.postman_collection.json`: exemplos e verificações de respostas.
-
-## Preparar o banco
-
-Abra o Docker Desktop e espere o serviço iniciar. Se já possui o banco das aulas na porta 3306, use esse banco. Caso contrário, crie um container local:
-
-```powershell
-docker run --name achados-perdidos-db-3307 -e MARIADB_ROOT_PASSWORD=root -p 3307:3306 -d mariadb:lts
-```
-
-Para um container já criado, use `docker start achados-perdidos-db-3307`. No MySQL Workbench, conecte em `localhost:3307`, usuário `root`, senha `root`, abra o script SQL deste projeto e execute-o. Aguarde o banco ficar pronto antes de conectar.
-
-As configurações padrão são locais e seguem a aula. Para alterá-las, defina as variáveis `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` e `DB_NAME` no terminal antes de iniciar. Exemplo: `$env:DB_PASSWORD = 'sua-senha'`. O projeto não carrega arquivos `.env` automaticamente.
-
-## Executar
-
-No terminal do VS Code, dentro da pasta do projeto:
-
-```powershell
-npm.cmd install
-$env:DB_PORT = '3307'
-npm.cmd start
-```
-
-`npm.cmd` evita restrições de execução do arquivo `npm.ps1` no PowerShell. Para executar sem Nodemon: `npm.cmd run serve`. Para parar, pressione Ctrl+C. A API usa `http://localhost:3000`. É necessário preparar o banco antes de utilizar as operações.
 
 ## Rotas
 
@@ -61,7 +37,3 @@ O ID é gerado pelo banco. Para atualizar, envie esse mesmo objeto com `"id": 1`
 O quadro não determina os valores de status: este projeto aceita texto obrigatório, como `Encontrado`, `Perdido` ou `Devolvido`. A data deve ser uma data real no formato AAAA-MM-DD. Os textos aceitam até 255 caracteres. PUT substitui todos os campos do objeto. A escolha de receber o ID no JSON para PUT e DELETE acompanha o exemplo do professor.
 
 Respostas: 200 para consulta/atualização/exclusão, 201 para cadastro, 400 para dados inválidos, 404 para objeto ou rota inexistente e 500 para falha no banco. Uma lista vazia retorna `[]`.
-
-## Testar no Postman
-
-Importe a coleção em `postman/`. Execute na ordem: Cadastrar, Listar, Buscar por ID, Atualizar e Excluir. O teste do cadastro salva automaticamente o ID gerado na variável `id`; as demais requisições usam esse valor.
